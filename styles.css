@@ -114,6 +114,17 @@ html, body {
   letter-spacing: 0.05em;
   transition: opacity 0.4s ease;
 }
+.envelope-congrats {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-style: italic;
+  color: var(--gold-light);
+  text-align: center;
+  letter-spacing: 0.03em;
+  text-shadow: 0 0 20px rgba(201,168,76,0.4);
+  animation: fadeUp 1s cubic-bezier(0.22,1,0.36,1) both;
+  margin-bottom: 8px;
+}
 .envelope-stage.opened .envelope-flap {
   transform: rotateX(180deg);
   z-index: 0;

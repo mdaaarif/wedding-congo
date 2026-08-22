@@ -7,16 +7,6 @@ const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
 /* ============================================================
    LETTER CONTENT
    ============================================================ */
-const LETTER_BEFORE = `
-<p>Aapa,</p>
-<p>I know you're at work right now, and I also know you'll be busy tomorrow. It's your wedding tomorrow, the biggest day of your life, and I really wish I could be there. But yeah… gotta do what you gotta do, and I think the only thing I can do now is probably text you.</p>
-<p>I hope you have the best day tomorrow. I know you might get a bit irritated when things don't go your way or aren't exactly the way you wanted them to be, but I hope you enjoy even those little chaotic moments because they'll all become memories someday.</p>
-<p>I wish you a beautiful wedding and an even more beautiful life ahead. May you and Umar bhai always be happy together, understand each other, support each other, and keep making each other smile.</p>
-<p>I know I can't say all this to your face, but you've always been the coolest, the prettiest, and my favourite.</p>
-<p>I really wish I could be there to see you get married and celebrate with you. I really wish I could hold the parda for you. I wished I could bathe you in haldi like Holi colours when I saw the pictures, dance at your Sangeet, and be of help during all the wedding functions. But even though I can't be there, I'll be thinking about you tomorrow.</p>
-<p>So, I wish you a happy Nikah tomorrow. May everything go according to how you planned and how you want it to be, and I hope you'll always be happy, Aapa.</p>
-<p>Love ya. ❤️</p>
-`;
 
 const LETTER_AFTER = `
 <p>Aapa,</p>
@@ -38,7 +28,6 @@ const PROMISE_TEXT = `
    STATE
    ============================================================ */
 let appState = {
-  version:        null,   // 'before' | 'after'
   isRecording:    false,
   mediaStream:    null,
   mediaRecorder:  null,
@@ -73,7 +62,7 @@ function openEnvelope() {
   const stage = document.querySelector('.envelope-stage');
   if (!stage || stage.classList.contains('opened')) return;
   stage.classList.add('opened');
-  setTimeout(() => showScreen('screen-status'), 900);
+  setTimeout(() => showScreen('screen-record'), 900);
 }
 
 /* ============================================================
@@ -91,13 +80,6 @@ function showScreen(id) {
   }
 }
 
-/* ============================================================
-   SCREEN 1 → Choose Status
-   ============================================================ */
-function chooseStatus(version) {
-  appState.version = version;
-  showScreen('screen-record');
-}
 
 /* ============================================================
    SCREEN 2 → Choose Recording
@@ -147,15 +129,10 @@ function getSupportedMimeType() {
 }
 
 /* ============================================================
-   SCREEN 3 → Build Letter (letter + promise only)
+   SCREEN 2 → Build Letter (always the After-Nikah letter)
    ============================================================ */
 function buildLetterScreen() {
-  const { version } = appState;
-
-  // Letter body
-  document.getElementById('letter-body').innerHTML = version === 'before' ? LETTER_BEFORE : LETTER_AFTER;
-
-  // Promise section
+  document.getElementById('letter-body').innerHTML = LETTER_AFTER;
   document.getElementById('promise-text').innerHTML = PROMISE_TEXT;
 }
 
@@ -169,21 +146,11 @@ function goToAction() {
 }
 
 function buildActionScreen() {
-  const { version } = appState;
-
-  if (version === 'before') {
-    document.getElementById('action-prompt').textContent =
-      '📸 Take a picture of yourself in your Nikah dress — I want a sneak peek!';
-    document.getElementById('upload-icon').textContent = '📷';
-    document.getElementById('upload-label').textContent = 'Tap to snap / upload a photo';
-    document.getElementById('file-input').setAttribute('accept', 'image/*');
-  } else {
-    document.getElementById('action-prompt').textContent =
-      '💕 Send me your favourite moment of the wedding!';
-    document.getElementById('upload-icon').textContent = '🎞️';
-    document.getElementById('upload-label').textContent = 'Tap to upload a photo or video';
-    document.getElementById('file-input').setAttribute('accept', 'image/*,video/*');
-  }
+  document.getElementById('action-prompt').textContent =
+    '💕 Send me your favourite moment of the wedding!';
+  document.getElementById('upload-icon').textContent = '🎞️';
+  document.getElementById('upload-label').textContent = 'Tap to upload a photo or video';
+  document.getElementById('file-input').setAttribute('accept', 'image/*,video/*');
 }
 
 /* ============================================================
@@ -248,7 +215,7 @@ async function submitAll() {
   }
 
   const payload = {
-    version:       appState.version,
+    version:       'after',
     reactionVideo: reactionBase64,
     uploadFile:    appState.uploadedFile  || null,
     uploadMime:    appState.uploadedMime  || null,

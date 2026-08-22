@@ -58,13 +58,23 @@ document.addEventListener('DOMContentLoaded', () => {
     s.classList.remove('active');
     s.style.display = 'none';
   });
-  // Then explicitly show the status screen
-  const first = document.getElementById('screen-status');
+  // Then explicitly show the envelope screen
+  const first = document.getElementById('screen-envelope');
   if (first) {
     first.classList.add('active');
     first.style.display = '';
   }
 });
+
+/* ============================================================
+   SCREEN 0 → Open Envelope
+   ============================================================ */
+function openEnvelope() {
+  const stage = document.querySelector('.envelope-stage');
+  if (!stage || stage.classList.contains('opened')) return;
+  stage.classList.add('opened');
+  setTimeout(() => showScreen('screen-status'), 900);
+}
 
 /* ============================================================
    SCREEN HELPERS
@@ -137,7 +147,7 @@ function getSupportedMimeType() {
 }
 
 /* ============================================================
-   SCREEN 3 → Build Letter
+   SCREEN 3 → Build Letter (letter + promise only)
    ============================================================ */
 function buildLetterScreen() {
   const { version } = appState;
@@ -147,8 +157,20 @@ function buildLetterScreen() {
 
   // Promise section
   document.getElementById('promise-text').innerHTML = PROMISE_TEXT;
+}
 
-  // Action prompt & icon
+/* ============================================================
+   SCREEN 3 → 3b: Continue to photo/video prompt
+   ============================================================ */
+function goToAction() {
+  buildActionScreen();
+  showScreen('screen-action');
+  document.getElementById('screen-action').scrollTop = 0;
+}
+
+function buildActionScreen() {
+  const { version } = appState;
+
   if (version === 'before') {
     document.getElementById('action-prompt').textContent =
       '📸 Take a picture of yourself in your Nikah dress — I want a sneak peek!';
@@ -162,6 +184,14 @@ function buildLetterScreen() {
     document.getElementById('upload-label').textContent = 'Tap to upload a photo or video';
     document.getElementById('file-input').setAttribute('accept', 'image/*,video/*');
   }
+}
+
+/* ============================================================
+   SCREEN 3b → 3c: Continue to signature ending
+   ============================================================ */
+function goToClosing() {
+  showScreen('screen-closing');
+  document.getElementById('screen-closing').scrollTop = 0;
 }
 
 /* ============================================================

@@ -16,6 +16,21 @@
   <canvas id="petals-canvas"></canvas>
 
   <!-- ============================================================ -->
+  <!-- SCREEN 0: Envelope                                           -->
+  <!-- ============================================================ -->
+  <div id="screen-envelope" class="screen">
+    <div class="envelope-stage" onclick="openEnvelope()">
+      <div class="envelope-box">
+        <div class="envelope-back"></div>
+        <div class="envelope-letter-inner">💌</div>
+        <div class="envelope-flap"></div>
+        <div class="wax-seal-btn">✦</div>
+      </div>
+      <p class="envelope-hint">tap to open</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
   <!-- SCREEN 1: Wedding Status Modal                               -->
   <!-- ============================================================ -->
   <div id="screen-status" class="screen">
@@ -87,7 +102,25 @@
           <div class="promise-text" id="promise-text"></div>
         </div>
 
-        <!-- Action / Sneak Peek Section -->
+        <!-- Continue -->
+        <button class="btn btn-continue" onclick="goToAction()">Continue →</button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SCREEN 3b: Photo / Video Prompt                              -->
+  <!-- ============================================================ -->
+  <div id="screen-action" class="screen">
+    <div class="letter-wrapper">
+      <div class="letter-card">
+
+        <div class="letter-header">
+          <div class="rose-icon">📷</div>
+          <p class="letter-from">One small favour</p>
+        </div>
+
         <div class="action-section" id="action-section">
           <p class="action-prompt" id="action-prompt"></p>
 
@@ -100,8 +133,21 @@
           <div id="preview-area" class="preview-area hidden"></div>
         </div>
 
+        <button class="btn btn-continue" onclick="goToClosing()">Continue →</button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SCREEN 3c: Signature Ending                                  -->
+  <!-- ============================================================ -->
+  <div id="screen-closing" class="screen">
+    <div class="letter-wrapper">
+      <div class="letter-card closing-card">
+
         <!-- Love closing -->
-        <div class="love-closing">
+        <div class="love-closing love-closing-big">
           <p>I love ya and always be happy.</p>
           <p class="heart-line">❤️</p>
         </div>

@@ -48,12 +48,37 @@ let appState = {
 };
 
 /* ============================================================
+   INITIALIZATION — runs as soon as DOM is ready
+   Ensures screen-status is ALWAYS the first thing shown,
+   regardless of any HTML class or browser caching quirks.
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  // Force hide every screen first
+  document.querySelectorAll('.screen').forEach(s => {
+    s.classList.remove('active');
+    s.style.display = 'none';
+  });
+  // Then explicitly show the status screen
+  const first = document.getElementById('screen-status');
+  if (first) {
+    first.classList.add('active');
+    first.style.display = '';
+  }
+});
+
+/* ============================================================
    SCREEN HELPERS
    ============================================================ */
 function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.screen').forEach(s => {
+    s.classList.remove('active');
+    s.style.display = 'none';
+  });
   const target = document.getElementById(id);
-  if (target) target.classList.add('active');
+  if (target) {
+    target.classList.add('active');
+    target.style.display = '';
+  }
 }
 
 /* ============================================================

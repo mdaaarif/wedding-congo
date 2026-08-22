@@ -41,16 +41,22 @@ html, body {
 }
 
 /* ============================================================
-   SCREENS
+   SCREENS — single source of truth for visibility
    ============================================================ */
 .screen {
-  display: none;
+  display: none !important;   /* hidden by default, always */
   position: fixed;
   inset: 0;
   z-index: 10;
+  overflow: hidden;
+}
+.screen.active {
+  display: flex !important;   /* shown only when JS adds .active */
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
   overflow-y: auto;
 }
-.screen.active { display: flex; align-items: center; justify-content: center; padding: 20px; }
 
 /* ============================================================
    MODAL CARDS (Screen 1 & 2)
@@ -195,18 +201,13 @@ html, body {
 }
 
 /* ============================================================
-   LETTER SCREEN
+   LETTER SCREEN — no separate ID rule needed, .screen handles it
    ============================================================ */
-#screen-letter {
-  display: none;
-  position: fixed;
-  inset: 0;
-  overflow-y: auto;
+#screen-letter.active {
   background: linear-gradient(160deg, var(--bg-dark) 0%, var(--bg-mid) 100%);
-  justify-content: center;
   padding: 40px 20px 60px;
+  align-items: flex-start;
 }
-#screen-letter.active { display: flex; align-items: flex-start; }
 
 .letter-wrapper {
   width: 100%;
@@ -414,18 +415,12 @@ html, body {
 }
 
 /* ============================================================
-   FAREWELL SCREEN
+   FAREWELL SCREEN — no separate ID rule needed
    ============================================================ */
-#screen-farewell {
-  display: none;
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-  justify-content: center;
-  align-items: center;
+#screen-farewell.active {
   background: linear-gradient(160deg, var(--bg-dark), var(--bg-mid));
+  overflow: hidden;
 }
-#screen-farewell.active { display: flex; }
 
 #confetti-canvas {
   position: absolute;

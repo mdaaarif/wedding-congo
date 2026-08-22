@@ -2,7 +2,7 @@
    CONFIGURATION
    Paste your Google Apps Script Web App URL below after setup.
    ============================================================ */
-const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyeYph4qhQ54fYFCyqZNxr-WAQuTGRaW8eLmvphGKxYmJAujg-hAYYX4I3pBEOJZ2bu2Q/exec';
 
 /* ============================================================
    LETTER CONTENT

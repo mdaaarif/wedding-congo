@@ -10,7 +10,7 @@ const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyeYph4qhQ54f
 
 const LETTER_AFTER = `
 <p>Aapa,</p>
-<p>I also know you're busy. It's your wedding, one of the biggest days of your life, and I really wish I could've been there. But yeah… gotta do what you gotta do, and I think the only thing I could've done was probably this.</p>
+<p>I know you're busy. It's your wedding, one of the biggest days of your life, and I really wish I could've been there. But yeah… gotta do what you gotta do, and I think the only thing I could've done was probably this.</p>
 <p>I hope you had the best day. I know you might have gotten a bit irritated when things didn't go your way or weren't exactly the way you wanted them to be, but I hope you enjoyed even those little chaotic moments because they'll all become memories someday.</p>
 <p>I wish you a beautiful wedding and an even more beautiful life ahead. May you and Umar bhai always be happy together, understand each other, support each other, and keep making each other smile.</p>
 <p>I know I can't say all this to your face, but you've always been the coolest, the prettiest, and my favourite.</p>

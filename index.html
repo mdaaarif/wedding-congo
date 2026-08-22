@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Letter For Aapa 💌</title>
+  <meta name="description" content="A heartfelt letter from your brother, written with love." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Floating Petals Canvas -->
+  <canvas id="petals-canvas"></canvas>
+
+  <!-- ============================================================ -->
+  <!-- SCREEN 1: Wedding Status Modal                               -->
+  <!-- ============================================================ -->
+  <div id="screen-status" class="screen active">
+    <div class="modal-card">
+      <div class="wax-seal">💌</div>
+      <h1 class="modal-title">A letter<br/><em>for Aapa</em></h1>
+      <p class="modal-subtitle">Before I open this letter, just tell me one thing…</p>
+      <div class="btn-group">
+        <button id="btn-before" class="btn btn-before" onclick="chooseStatus('before')">
+          🌸 Not Yet<br/><small>My Nikah hasn't happened yet</small>
+        </button>
+        <button id="btn-after" class="btn btn-after" onclick="chooseStatus('after')">
+          ✨ Yes, it's done!<br/><small>I'm a married woman now 💍</small>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SCREEN 2: Record Reaction                                    -->
+  <!-- ============================================================ -->
+  <div id="screen-record" class="screen">
+    <div class="modal-card">
+      <div class="wax-seal">🎥</div>
+      <h2 class="modal-title">One more thing,<br/><em>Aapa…</em></h2>
+      <p class="modal-subtitle">
+        I wish I could be right there beside you today.<br/>
+        Can I record your reaction while you read this letter, so I can see your smile? 🥺
+      </p>
+      <div class="btn-group">
+        <button class="btn btn-before" onclick="chooseRecord(true)">
+          🎥 Yes, record my reaction!
+        </button>
+        <button class="btn btn-plain" onclick="chooseRecord(false)">
+          💌 Just let me read
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SCREEN 3: The Letter                                         -->
+  <!-- ============================================================ -->
+  <div id="screen-letter" class="screen">
+
+    <!-- Recording Indicator -->
+    <div id="rec-indicator" class="rec-indicator hidden">
+      <span class="rec-dot"></span> Recording your reaction…
+    </div>
+
+    <!-- Hidden video element for camera stream -->
+    <video id="camera-preview" autoplay muted playsinline class="camera-preview hidden"></video>
+
+    <div class="letter-wrapper">
+      <div class="letter-card">
+
+        <!-- Letter Header -->
+        <div class="letter-header">
+          <div class="rose-icon">🌹</div>
+          <p class="letter-from">A letter from your brother</p>
+        </div>
+
+        <!-- Letter Body -->
+        <div id="letter-body" class="letter-body"></div>
+
+        <!-- Promise Section -->
+        <div class="promise-section">
+          <div class="promise-icon">🤝</div>
+          <div class="promise-text" id="promise-text"></div>
+        </div>
+
+        <!-- Action / Sneak Peek Section -->
+        <div class="action-section" id="action-section">
+          <p class="action-prompt" id="action-prompt"></p>
+
+          <div class="upload-zone" id="upload-zone" onclick="triggerUpload()">
+            <div class="upload-icon" id="upload-icon">📷</div>
+            <p id="upload-label">Tap to take / upload</p>
+            <input type="file" id="file-input" accept="image/*,video/*" style="display:none" onchange="handleFileSelect(event)" />
+          </div>
+
+          <div id="preview-area" class="preview-area hidden"></div>
+        </div>
+
+        <!-- Love closing -->
+        <div class="love-closing">
+          <p>I love ya and always be happy.</p>
+          <p class="heart-line">❤️</p>
+        </div>
+
+        <!-- Submit Button -->
+        <button id="btn-submit" class="btn btn-submit" onclick="submitAll()">
+          Send to my brother 💌
+        </button>
+
+        <p id="submit-status" class="submit-status"></p>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SCREEN 4: Farewell                                           -->
+  <!-- ============================================================ -->
+  <div id="screen-farewell" class="screen">
+    <canvas id="confetti-canvas"></canvas>
+    <div class="farewell-card">
+      <div class="farewell-icon">❤️</div>
+      <h2 class="farewell-title">Sent with all my love, Aapa.</h2>
+      <p class="farewell-sub">I love ya and always be happy. ❤️</p>
+      <p class="farewell-note">No matter where life takes us, you always have a younger brother who will pick up on the first ring. 🤙</p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

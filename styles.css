@@ -1,0 +1,506 @@
+/* ============================================================
+   ROOT & RESET
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold:        #c9a84c;
+  --gold-light:  #e8d08a;
+  --gold-dim:    #7a6130;
+  --rose:        #c2637a;
+  --rose-light:  #f4c6cf;
+  --cream:       #fdf6ec;
+  --parchment:   #f9eed6;
+  --ink:         #2c1a0e;
+  --ink-soft:    #5a3e28;
+  --bg-dark:     #0d0608;
+  --bg-mid:      #1a0c10;
+  --font-serif:  'Cormorant Garamond', Georgia, serif;
+  --font-sans:   'Lato', sans-serif;
+  --radius:      20px;
+  --shadow:      0 20px 60px rgba(0,0,0,0.5);
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  background: var(--bg-dark);
+  color: var(--cream);
+  font-family: var(--font-sans);
+}
+
+/* ============================================================
+   PETAL CANVAS
+   ============================================================ */
+#petals-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   SCREENS
+   ============================================================ */
+.screen {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  overflow-y: auto;
+}
+.screen.active { display: flex; align-items: center; justify-content: center; padding: 20px; }
+
+/* ============================================================
+   MODAL CARDS (Screen 1 & 2)
+   ============================================================ */
+.modal-card {
+  background: linear-gradient(145deg, #1f0d14 0%, #2b1020 60%, #1a0c10 100%);
+  border: 1px solid rgba(201, 168, 76, 0.35);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow), inset 0 0 60px rgba(201, 168, 76, 0.04);
+  padding: 48px 36px 40px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.wax-seal {
+  font-size: 2.8rem;
+  display: block;
+  margin-bottom: 18px;
+  filter: drop-shadow(0 0 12px rgba(201, 168, 76, 0.5));
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.modal-title {
+  font-family: var(--font-serif);
+  font-size: 2.6rem;
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--gold-light);
+  margin-bottom: 14px;
+  text-shadow: 0 0 30px rgba(201, 168, 76, 0.3);
+}
+.modal-title em { font-style: italic; color: var(--rose-light); }
+
+.modal-subtitle {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: rgba(253, 246, 236, 0.75);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.btn {
+  padding: 16px 20px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  line-height: 1.4;
+}
+.btn small { display: block; font-size: 0.75rem; opacity: 0.7; font-family: var(--font-sans); margin-top: 2px; }
+
+.btn-before {
+  background: linear-gradient(135deg, #c9a84c 0%, #e8d08a 50%, #c9a84c 100%);
+  color: #1a0c10;
+  border-color: var(--gold);
+  box-shadow: 0 4px 20px rgba(201, 168, 76, 0.3);
+}
+.btn-before:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(201, 168, 76, 0.5);
+}
+
+.btn-after {
+  background: linear-gradient(135deg, #c2637a 0%, #f4c6cf 50%, #c2637a 100%);
+  color: #1a0c10;
+  border-color: var(--rose);
+  box-shadow: 0 4px 20px rgba(194, 99, 122, 0.3);
+}
+.btn-after:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(194, 99, 122, 0.5);
+}
+
+.btn-plain {
+  background: transparent;
+  color: rgba(253,246,236,0.65);
+  border-color: rgba(253,246,236,0.2);
+}
+.btn-plain:hover {
+  background: rgba(255,255,255,0.05);
+  color: var(--cream);
+}
+
+/* ============================================================
+   RECORDING INDICATOR
+   ============================================================ */
+.rec-indicator {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 200;
+  background: rgba(20, 5, 10, 0.85);
+  border: 1px solid rgba(255,80,80,0.4);
+  border-radius: 30px;
+  padding: 8px 16px;
+  font-size: 0.78rem;
+  color: #ff9090;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(255,0,0,0.15);
+}
+.rec-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #ff4444;
+  animation: blink 1.2s ease-in-out infinite;
+}
+
+/* ============================================================
+   CAMERA PREVIEW
+   ============================================================ */
+.camera-preview {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 100px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 2px solid rgba(201,168,76,0.4);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  z-index: 150;
+  transform: scaleX(-1); /* mirror */
+}
+
+/* ============================================================
+   LETTER SCREEN
+   ============================================================ */
+#screen-letter {
+  display: none;
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  background: linear-gradient(160deg, var(--bg-dark) 0%, var(--bg-mid) 100%);
+  justify-content: center;
+  padding: 40px 20px 60px;
+}
+#screen-letter.active { display: flex; }
+
+.letter-wrapper {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  animation: fadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.letter-card {
+  background: linear-gradient(160deg, #fdf8ef 0%, #f9eed6 40%, #fdf0dc 100%);
+  border-radius: 24px;
+  padding: 56px 52px 48px;
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(201,168,76,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+  position: relative;
+  color: var(--ink);
+}
+
+/* Gold corner ornaments */
+.letter-card::before,
+.letter-card::after {
+  content: '✦';
+  position: absolute;
+  font-size: 1.1rem;
+  color: var(--gold-dim);
+  opacity: 0.4;
+}
+.letter-card::before { top: 18px; left: 22px; }
+.letter-card::after  { bottom: 18px; right: 22px; }
+
+.letter-header {
+  text-align: center;
+  margin-bottom: 36px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(122, 97, 48, 0.2);
+}
+.rose-icon {
+  font-size: 2.4rem;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 2px 6px rgba(194,99,122,0.3));
+}
+.letter-from {
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--ink-soft);
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+}
+
+/* ============================================================
+   LETTER BODY TEXT
+   ============================================================ */
+.letter-body {
+  font-family: var(--font-serif);
+  font-size: 1.18rem;
+  line-height: 1.95;
+  color: var(--ink);
+  font-weight: 300;
+}
+.letter-body p {
+  margin-bottom: 1.4em;
+}
+.letter-body p:last-child { margin-bottom: 0; }
+
+/* ============================================================
+   PROMISE SECTION
+   ============================================================ */
+.promise-section {
+  margin: 36px 0;
+  background: linear-gradient(135deg, rgba(201,168,76,0.1) 0%, rgba(194,99,122,0.08) 100%);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 16px;
+  padding: 28px 26px;
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+.promise-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.promise-text {
+  font-family: var(--font-serif);
+  font-size: 1.08rem;
+  line-height: 1.85;
+  color: var(--ink);
+  font-weight: 400;
+}
+.promise-text p { margin-bottom: 1em; }
+.promise-text p:last-child { margin-bottom: 0; }
+
+/* ============================================================
+   ACTION SECTION
+   ============================================================ */
+.action-section {
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(122,97,48,0.2);
+  text-align: center;
+}
+.action-prompt {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--ink-soft);
+  margin-bottom: 22px;
+  line-height: 1.6;
+}
+
+.upload-zone {
+  border: 2px dashed rgba(201,168,76,0.45);
+  border-radius: 16px;
+  padding: 32px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(201,168,76,0.04);
+  margin-bottom: 16px;
+}
+.upload-zone:hover {
+  border-color: var(--gold);
+  background: rgba(201,168,76,0.08);
+  transform: translateY(-2px);
+}
+.upload-icon { font-size: 2.2rem; margin-bottom: 8px; }
+.upload-zone p {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: var(--ink-soft);
+  opacity: 0.7;
+}
+
+.preview-area {
+  border-radius: 14px;
+  overflow: hidden;
+  margin-top: 16px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+.preview-area img,
+.preview-area video {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  display: block;
+  border-radius: 14px;
+}
+
+/* ============================================================
+   LOVE CLOSING
+   ============================================================ */
+.love-closing {
+  text-align: center;
+  margin: 36px 0 28px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(122,97,48,0.2);
+}
+.love-closing p {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-style: italic;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.heart-line { font-size: 1.8rem; margin-top: 8px !important; }
+
+/* ============================================================
+   SUBMIT BUTTON
+   ============================================================ */
+.btn-submit {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, #c9a84c 0%, #e8d08a 50%, #c9a84c 100%);
+  color: #1a0c10;
+  border: none;
+  border-radius: 14px;
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(201,168,76,0.4);
+  transition: all 0.3s ease;
+  letter-spacing: 0.02em;
+}
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 36px rgba(201,168,76,0.55);
+}
+.btn-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.submit-status {
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  margin-top: 12px;
+  min-height: 20px;
+  font-style: italic;
+}
+
+/* ============================================================
+   FAREWELL SCREEN
+   ============================================================ */
+#screen-farewell {
+  display: none;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(160deg, var(--bg-dark), var(--bg-mid));
+}
+#screen-farewell.active { display: flex; }
+
+#confetti-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.farewell-card {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 20px;
+  max-width: 460px;
+  animation: fadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.farewell-icon {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 22px;
+  filter: drop-shadow(0 0 20px rgba(255,100,120,0.5));
+  animation: pulse 2s ease-in-out infinite;
+}
+.farewell-title {
+  font-family: var(--font-serif);
+  font-size: 2.4rem;
+  font-weight: 300;
+  color: var(--gold-light);
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+.farewell-sub {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-style: italic;
+  color: var(--rose-light);
+  margin-bottom: 20px;
+}
+.farewell-note {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: rgba(253,246,236,0.6);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ============================================================
+   UTILITY
+   ============================================================ */
+.hidden { display: none !important; }
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 540px) {
+  .letter-card { padding: 36px 24px 36px; }
+  .modal-card { padding: 36px 24px 32px; }
+  .letter-body { font-size: 1.05rem; }
+  .modal-title { font-size: 2.1rem; }
+}

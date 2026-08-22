@@ -206,7 +206,7 @@ html, body {
   justify-content: center;
   padding: 40px 20px 60px;
 }
-#screen-letter.active { display: flex; }
+#screen-letter.active { display: flex; align-items: flex-start; }
 
 .letter-wrapper {
   width: 100%;

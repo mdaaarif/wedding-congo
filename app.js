@@ -99,6 +99,8 @@ async function chooseRecord(wantsRecord) {
 
   buildLetterScreen();
   showScreen('screen-letter');
+  // Ensure letter always starts from the top
+  document.getElementById('screen-letter').scrollTop = 0;
 }
 
 function getSupportedMimeType() {
